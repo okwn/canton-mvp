@@ -1,0 +1,50 @@
+-- Canton MVP — App Connection (User ↔ App)
+--
+-- Represents a user's connection to an app (onboarding).
+-- Party roles:
+--   - user: End user connecting to the app
+--   - appProvider: App provider
+--   - appId: App identifier (matches AppRegistry)
+-- Authority: both user and appProvider signatory; either can disconnect.
+--
+-- Flow: AppConnectionRequest (provider creates) -> User accepts -> AppConnection
+
+module AppConnection where
+
+template AppConnectionRequest
+  with
+    user: Party
+    appProvider: Party
+    appId: Text
+    metadata: Optional Text
+  where
+    signatory appProvider
+    choice RegisterUserAppConnection : ContractId AppConnection
+      controller user
+      do
+        connCid <- create AppConnection with
+          user = user
+          appProvider = appProvider
+          appId = appId
+          metadata = metadata
+        archive self
+        return connCid
+    choice WithdrawRequest : ()
+      controller appProvider
+      do archive self
+
+template AppConnection
+  with
+    user: Party
+    appProvider: Party
+    appId: Text
+    metadata: Optional Text
+  where
+    signatory user, appProvider
+    -- Either party can disconnect
+    choice UserDisconnect : ()
+      controller user
+      do archive self
+    choice ProviderDisconnect : ()
+      controller appProvider
+      do archive self

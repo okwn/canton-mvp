@@ -1,0 +1,44 @@
+{
+  "name": "canton-mvp",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Production-grade Canton Network MVP starter kit",
+  "author": "Canton MVP Team",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@9.14.2",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "build:filter": "turbo run build --filter",
+    "dev": "turbo run dev",
+    "dev:web": "turbo run dev --filter=@canton-mvp/web",
+    "dev:api": "turbo run dev --filter=@canton-mvp/api",
+    "dev:admin": "turbo run dev --filter=@canton-mvp/admin",
+    "dev:docs": "turbo run dev --filter=@canton-mvp/docs-site",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "test": "turbo run test",
+    "test:coverage": "turbo run test:coverage",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "prepare": "husky",
+    "commit": "commitlint --edit"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": ["eslint --fix", "prettier --write"],
+    "*.{json,md}": ["prettier --write"]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@canton-mvp/eslint-config": "workspace:*",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3"
+  }
+}

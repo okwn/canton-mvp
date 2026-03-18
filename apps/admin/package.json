@@ -1,0 +1,29 @@
+{
+  "name": "@canton-mvp/admin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "clean": "rm -rf dist",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@canton-mvp/shared-types": "workspace:*",
+    "@canton-mvp/canton-client": "workspace:*",
+    "@canton-mvp/validator-client": "workspace:*",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@canton-mvp/eslint-config": "workspace:*",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3"
+  }
+}

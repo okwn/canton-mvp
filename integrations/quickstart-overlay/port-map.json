@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Port mappings from cn-quickstart LocalNet to canton-mvp env vars",
+  "participants": {
+    "app-user": {
+      "ledgerApi": 2901,
+      "adminApi": 2902,
+      "validatorApi": 2903,
+      "jsonApi": 2975,
+      "health": 2900
+    },
+    "app-provider": {
+      "ledgerApi": 3901,
+      "adminApi": 3902,
+      "validatorApi": 3903,
+      "jsonApi": 3975,
+      "health": 3900
+    },
+    "sv": {
+      "ledgerApi": 4901,
+      "adminApi": 4902,
+      "validatorApi": 4903,
+      "jsonApi": 4975,
+      "health": 4900
+    }
+  },
+  "services": {
+    "scan": {
+      "port": 4000,
+      "url": "http://scan.localhost:4000"
+    },
+    "wallet": {
+      "appUser": "http://wallet.localhost:2000",
+      "appProvider": "http://wallet.localhost:3000"
+    },
+    "keycloak": {
+      "port": 8082,
+      "url": "http://keycloak.localhost:8082"
+    }
+  },
+  "defaultParticipant": "app-provider",
+  "envMapping": {
+    "LEDGER_API_URL": "http://canton.localhost:3975",
+    "VALIDATOR_API_URL": "http://canton.localhost:3903",
+    "SCAN_API_URL": "http://scan.localhost:4000",
+    "WALLET_GATEWAY_URL": "http://wallet.localhost:3000"
+  }
+}

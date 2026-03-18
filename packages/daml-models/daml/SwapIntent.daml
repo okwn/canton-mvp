@@ -1,0 +1,67 @@
+-- Canton MVP — Swap Intent and Proposal
+--
+-- SwapProposal: counterparty's proposed swap (after accepting quote).
+-- SwapIntent: both parties agreed; ready for settlement.
+-- Party roles:
+--   - initiator: Party giving initiatorInstrument
+--   - counterparty: Party giving counterpartyInstrument
+-- Authority: SwapProposal has counterparty signatory; initiator confirms to create SwapIntent.
+--            SwapIntent has both signatories; either can trigger settlement preparation.
+
+module SwapIntent where
+
+import Types
+
+-- | Proposed swap (counterparty accepted quote). Initiator must confirm.
+template SwapProposal
+  with
+    initiator: Party
+    counterparty: Party
+    initiatorInstrument: InstrumentId
+    counterpartyInstrument: InstrumentId
+    initiatorAmount: Amount
+    counterpartyAmount: Amount
+  where
+    signatory counterparty
+    choice ConfirmSwap : ContractId SwapIntent
+      controller initiator
+      do
+        create SwapIntent with
+          initiator = initiator
+          counterparty = counterparty
+          initiatorInstrument = initiatorInstrument
+          counterpartyInstrument = counterpartyInstrument
+          initiatorAmount = initiatorAmount
+          counterpartyAmount = counterpartyAmount
+    choice RejectProposal : ()
+      controller initiator
+      do archive self
+
+-- | Agreed swap (both parties signed). Ready for settlement.
+template SwapIntent
+  with
+    initiator: Party
+    counterparty: Party
+    initiatorInstrument: InstrumentId
+    counterpartyInstrument: InstrumentId
+    initiatorAmount: Amount
+    counterpartyAmount: Amount
+  where
+    signatory initiator, counterparty
+    choice PrepareSettlement : ContractId SettlementInstruction
+      controller initiator, counterparty
+      do
+        -- Archive this SwapIntent and create SettlementInstruction (atomic)
+        settlementCid <- create SettlementInstruction with
+          initiator = initiator
+          counterparty = counterparty
+          initiatorInstrument = initiatorInstrument
+          counterpartyInstrument = counterpartyInstrument
+          initiatorAmount = initiatorAmount
+          counterpartyAmount = counterpartyAmount
+          status = Pending
+        archive self
+        return settlementCid
+    choice CancelIntent : ()
+      controller initiator, counterparty
+      do archive self

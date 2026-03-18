@@ -1,0 +1,16 @@
+{
+  "name": "@canton-mvp/example-swap-flow",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "RFQ to settlement demo — full swap flow via API",
+  "scripts": {
+    "start": "tsx run.ts",
+    "dev": "tsx run.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

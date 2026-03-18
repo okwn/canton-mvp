@@ -1,0 +1,34 @@
+-- Canton MVP — Token Intent
+--
+-- Intent to transfer tokens (single leg).
+-- Party roles:
+--   - initiator: Party initiating the transfer
+--   - instrumentId: Token type
+--   - amount: Amount to transfer
+--   - recipient: Optional recipient (if empty, recipient specified later)
+-- Authority: initiator is signatory; initiator can cancel.
+
+module TokenIntent where
+
+import Types
+
+template TokenIntent
+  with
+    initiator: Party
+    instrumentId: InstrumentId
+    amount: Amount
+    recipient: Optional Party
+    metadata: Optional Text
+  where
+    signatory initiator
+    choice Cancel : ()
+      controller initiator
+      do archive self
+    choice SetRecipient : ContractId TokenIntent
+      with
+        newRecipient: Party
+      controller initiator
+      do
+        newCid <- create this with recipient = Some newRecipient
+        archive self
+        return newCid

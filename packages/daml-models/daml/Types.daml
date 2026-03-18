@@ -1,0 +1,24 @@
+-- Canton MVP — Shared types and status enums
+-- Used across primitives, registry, and intent modules.
+
+module Types where
+
+-- | Status for intent-like contracts (quote, swap, settlement).
+data IntentStatus
+  = Pending
+  | Accepted
+  | Rejected
+  | Cancelled
+  | Finalized
+  deriving (Eq, Show)
+
+-- | Instrument reference for token flows (CIP-0056 compatible).
+-- Admin party + symbol identify the token type.
+data InstrumentId = InstrumentId
+  with
+    admin: Party
+    symbol: Text
+  deriving (Eq, Show)
+
+-- | Amount with decimal precision (e.g. "100.50").
+type Amount = Text

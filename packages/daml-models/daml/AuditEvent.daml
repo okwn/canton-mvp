@@ -1,0 +1,20 @@
+-- Canton MVP — Audit Event
+--
+-- Reusable primitive: immutable audit record.
+-- Party roles:
+--   - recorder: Party that records the event (e.g. app provider, validator)
+--   - subject: Optional party the event relates to
+-- Authority: recorder is signatory; contract is append-only (no choices to modify).
+
+module AuditEvent where
+
+template AuditEvent
+  with
+    recorder: Party
+    subject: Optional Party
+    eventType: Text
+    payload: Text
+    timestamp: Time
+  where
+    signatory recorder
+    -- No choices: immutable audit trail

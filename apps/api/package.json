@@ -1,0 +1,44 @@
+{
+  "name": "@canton-mvp/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist",
+    "lint": "eslint src --max-warnings 0",
+    "lint:fix": "eslint src --fix",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "openapi:export": "tsx src/scripts/export-openapi.ts"
+  },
+  "dependencies": {
+    "@canton-mvp/canton-client": "workspace:*",
+    "@canton-mvp/observability": "workspace:*",
+    "@canton-mvp/party-identity": "workspace:*",
+    "@canton-mvp/scan-client": "workspace:*",
+    "@canton-mvp/shared-types": "workspace:*",
+    "@canton-mvp/swap-engine": "workspace:*",
+    "@canton-mvp/token-standard": "workspace:*",
+    "@canton-mvp/validator-client": "workspace:*",
+    "@canton-mvp/wallet-adapter": "workspace:*",
+    "@fastify/cors": "^10.0.1",
+    "@fastify/rate-limit": "^10.1.1",
+    "@fastify/sensible": "^6.0.1",
+    "@fastify/swagger": "^9.4.0",
+    "@fastify/swagger-ui": "^5.0.0",
+    "fastify": "^5.1.0",
+    "jose": "^5.9.6",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@canton-mvp/eslint-config": "workspace:*",
+    "@types/node": "^22.10.1",
+    "supertest": "^7.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.6"
+  }
+}

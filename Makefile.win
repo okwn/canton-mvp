@@ -1,0 +1,17 @@
+# Canton MVP — Developer commands (Windows)
+# Use `make help` or `nmake /N help` for targets
+# Requires: pnpm, or use `pnpm run <script>` directly
+
+help:
+	@echo Canton MVP - Available targets
+	@echo.
+	@echo   pnpm install     Install dependencies
+	@echo   pnpm build      Build all packages and apps
+	@echo   pnpm dev        Start all dev servers
+	@echo   pnpm dev:web    Start web app only
+	@echo   pnpm dev:api    Start API server only
+	@echo   pnpm lint       Lint all packages
+	@echo   pnpm test       Run tests
+	@echo   pnpm clean      Clean all build artifacts
+	@echo.
+	@echo On Windows, use pnpm directly or install Make (e.g. via Chocolatey).

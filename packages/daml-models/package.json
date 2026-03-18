@@ -1,0 +1,31 @@
+{
+  "name": "@canton-mvp/daml-models",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "pnpm run build:ts",
+    "build:daml": "daml build",
+    "build:codegen": "daml codegen typescript .daml/dist/*.dar -o generated",
+    "build:ts": "tsc",
+    "clean": "rm -rf dist .daml generated",
+    "lint": "eslint src --max-warnings 0",
+    "lint:fix": "eslint src --fix"
+  },
+  "dependencies": {
+    "@canton-mvp/shared-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@canton-mvp/eslint-config": "workspace:*",
+    "typescript": "^5.7.2"
+  }
+}

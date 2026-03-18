@@ -1,0 +1,32 @@
+{
+  "name": "@canton-mvp/validator-client",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "lint": "eslint src --max-warnings 0",
+    "lint:fix": "eslint src --fix",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@canton-mvp/canton-client": "workspace:*",
+    "@canton-mvp/shared-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@canton-mvp/eslint-config": "workspace:*",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.6"
+  }
+}

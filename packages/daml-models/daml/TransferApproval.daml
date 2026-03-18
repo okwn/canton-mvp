@@ -1,0 +1,26 @@
+-- Canton MVP — Transfer Approval (Pre-approval)
+--
+-- Reusable primitive: pre-approval for a future transfer.
+-- Aligns with CIP-0056 transfer pre-approval patterns.
+-- Party roles:
+--   - approver: Party that grants the approval (asset owner)
+--   - beneficiary: Party that may receive the transfer
+--   - instrumentId: Token type
+-- Authority: approver is sole signatory; only approver can revoke.
+
+module TransferApproval where
+
+import Types
+
+template TransferApproval
+  with
+    approver: Party
+    beneficiary: Party
+    instrumentId: InstrumentId
+    maxAmount: Amount
+    expiry: Optional Time
+  where
+    signatory approver
+    choice Revoke : ()
+      controller approver
+      do archive self

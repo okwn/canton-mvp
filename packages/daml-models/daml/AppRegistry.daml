@@ -1,0 +1,27 @@
+-- Canton MVP — App Registry
+--
+-- Registry of apps (app provider centric).
+-- Party roles:
+--   - provider: App provider that operates the app
+--   - appId: Unique app identifier
+-- Authority: provider is signatory; only provider can register/update apps.
+
+module AppRegistry where
+
+template AppRegistry
+  with
+    provider: Party
+    appId: Text
+    appName: Text
+    metadata: Optional Text
+  where
+    signatory provider
+    choice UpdateApp : ContractId AppRegistry
+      with
+        newAppName: Optional Text
+        newMetadata: Optional Text
+      controller provider
+      do
+        create this with
+          appName = fromOptional appName newAppName
+          metadata = fromOptional metadata newMetadata

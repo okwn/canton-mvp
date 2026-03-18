@@ -1,0 +1,16 @@
+{
+  "name": "@canton-mvp/example-app-onboarding",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "App onboarding — create user, link party, connect wallet, inspect holdings",
+  "scripts": {
+    "start": "tsx run.ts",
+    "dev": "tsx run.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

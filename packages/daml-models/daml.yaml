@@ -1,0 +1,13 @@
+# Canton MVP Daml models
+# Requires: daml sdk (daml install)
+sdk-version: "3.0.0"
+name: canton-mvp-models
+source: daml
+parties:
+  - participant
+dependencies:
+  - daml-prim
+  - daml-stdlib
+codegen:
+  typescript:
+    output-dir: generated

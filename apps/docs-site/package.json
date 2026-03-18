@@ -1,0 +1,19 @@
+{
+  "name": "@canton-mvp/docs-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "clean": "rm -rf .vitepress/cache dist",
+    "lint": "eslint . --max-warnings 0 --ignore-pattern '.vitepress/dist/**' --ignore-pattern 'node_modules/**'",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@canton-mvp/eslint-config": "workspace:*",
+    "typescript": "^5.7.2",
+    "vitepress": "^1.0.0"
+  }
+}

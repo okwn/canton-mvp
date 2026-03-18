@@ -1,0 +1,30 @@
+-- Canton MVP — Identity / Party Profile
+--
+-- Reusable primitive: minimal profile for a party.
+-- Party roles:
+--   - provider: Party that provides the profile (e.g. identity provider, app provider)
+--   - subject: Party the profile describes (the user/entity)
+-- Authority: provider creates; subject can update their own profile fields if allowed.
+
+module PartyProfile where
+
+import Types
+
+template PartyProfile
+  with
+    provider: Party
+    subject: Party
+    displayName: Text
+    metadata: Optional Text
+  where
+    signatory provider
+    -- Subject can read; provider controls lifecycle
+    choice UpdateProfile : ContractId PartyProfile
+      with
+        newDisplayName: Optional Text
+        newMetadata: Optional Text
+      controller subject
+      do
+        create this with
+          displayName = fromOptional displayName newDisplayName
+          metadata = fromOptional metadata newMetadata

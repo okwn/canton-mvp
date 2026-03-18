@@ -1,0 +1,46 @@
+-- Canton MVP — Quote Request
+--
+-- Request for a quote (initiator asks counterparty for quote).
+-- Party roles:
+--   - initiator: Party requesting the quote
+--   - counterparty: Party that will provide the quote
+--   - initiatorInstrument: What initiator gives
+--   - counterpartyInstrument: What initiator wants
+--   - initiatorAmount: Amount initiator offers
+-- Authority: initiator creates; counterparty can Accept (creates SwapProposal) or Reject.
+
+module QuoteRequest where
+
+import Types
+import SwapIntent
+
+template QuoteRequest
+  with
+    initiator: Party
+    counterparty: Party
+    initiatorInstrument: InstrumentId
+    counterpartyInstrument: InstrumentId
+    initiatorAmount: Amount
+    expiry: Optional Time
+  where
+    signatory initiator
+    choice AcceptQuote : ContractId SwapProposal
+      with
+        counterpartyAmount: Amount
+      controller counterparty
+      do
+        proposalCid <- create SwapProposal with
+          initiator = initiator
+          counterparty = counterparty
+          initiatorInstrument = initiatorInstrument
+          counterpartyInstrument = counterpartyInstrument
+          initiatorAmount = initiatorAmount
+          counterpartyAmount = counterpartyAmount
+        archive self
+        return proposalCid
+    choice RejectQuote : ()
+      controller counterparty
+      do archive self
+    choice CancelRequest : ()
+      controller initiator
+      do archive self

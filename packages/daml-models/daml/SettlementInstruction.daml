@@ -1,0 +1,30 @@
+-- Canton MVP — Settlement Instruction
+--
+-- Instruction to execute a swap (created from SwapIntent).
+-- Party roles:
+--   - initiator: Party giving initiatorInstrument
+--   - counterparty: Party giving counterpartyInstrument
+-- Authority: both signatories; both must authorize FinalizeSwap.
+-- FinalizeSwap archives this and records completion (actual token transfer is off-ledger or via token contracts).
+
+module SettlementInstruction where
+
+import Types
+
+template SettlementInstruction
+  with
+    initiator: Party
+    counterparty: Party
+    initiatorInstrument: InstrumentId
+    counterpartyInstrument: InstrumentId
+    initiatorAmount: Amount
+    counterpartyAmount: Amount
+    status: IntentStatus
+  where
+    signatory initiator, counterparty
+    choice FinalizeSwap : ()
+      controller initiator, counterparty
+      do archive self
+    choice CancelSettlement : ()
+      controller initiator, counterparty
+      do archive self
